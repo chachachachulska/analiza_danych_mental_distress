@@ -1,0 +1,32 @@
+# macOS / editor files
+.DS_Store
+.idea/
+.vscode/
+
+# Python-generated files
+__pycache__/
+*.py[oc]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+build/
+dist/
+wheels/
+*.egg-info
+
+# Local data artifacts
+data/
+
+# Generated outputs
+output/
+
+# Local environment / logs
+.env
+.env.*
+*.log
+
+# Virtual environments
+.venv/
