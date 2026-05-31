@@ -1,9 +1,0 @@
-default_profile = "Default"
-
-[profiles.Default]
-adapter = "duckdb"
-theme = "textual-dark"
-limit = 100
-keymap_name = ["vscode"]
-show_files = "data"
-conn_str = ["data/db.duckdb"]
