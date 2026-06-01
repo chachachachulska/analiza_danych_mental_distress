@@ -193,6 +193,8 @@ The project uses:
     └── generated plots, ignored by Git
 ```
 
+Note: `queries/thesis.sql` is an archival exploratory SQL sketch from an earlier country-level analysis idea. It is not part of the current US state-level pipeline and is not required to run the project.
+
 ## Limitations
 
 - Most results are state-level, so they should not be interpreted as individual-level causal estimates.

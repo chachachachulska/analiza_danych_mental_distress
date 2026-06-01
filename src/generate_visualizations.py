@@ -1,12 +1,19 @@
+from pathlib import Path
+
 import duckdb
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
 
+ROOT_DIR = Path(__file__).resolve().parents[1]
+DATA_DIR = ROOT_DIR / "data"
+OUTPUT_DIR = ROOT_DIR / "output"
+
 
 def main():
-    con = duckdb.connect("data/db.duckdb")
+    OUTPUT_DIR.mkdir(exist_ok=True)
+    con = duckdb.connect(str(DATA_DIR / "db.duckdb"))
 
     # 1. Prepare combined state-level data
     query = """
@@ -67,7 +74,7 @@ def main():
     plt.ylabel("Prolific PHQ-9 Moderate+ Depression Rate")
     plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
     plt.tight_layout()
-    plt.savefig("output/plot1_cdc_vs_prolific.png")
+    plt.savefig(OUTPUT_DIR / "plot1_cdc_vs_prolific.png")
     plt.close()
 
     # --- Plot 2: Sleep Duration vs FB Batch & Mental Distress vs Physical Health ---
@@ -100,7 +107,7 @@ def main():
     ax2.set_ylabel("Mental Distress Rate")
 
     plt.tight_layout()
-    plt.savefig("output/plot2_sleep_phys.png")
+    plt.savefig(OUTPUT_DIR / "plot2_sleep_phys.png")
     plt.close()
 
     # --- Plot 3: Depression Rate vs Facebook Expansion Batch (State Level) ---
@@ -120,7 +127,7 @@ def main():
     plt.ylabel("Prolific PHQ-9 Moderate+ Depression Rate")
     plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
     plt.tight_layout()
-    plt.savefig("output/plot3_depression_fb.png")
+    plt.savefig(OUTPUT_DIR / "plot3_depression_fb.png")
     plt.close()
 
     # --- Plot 4: Mental Distress vs State Income (Colored by Mobile Usage) ---
@@ -140,7 +147,7 @@ def main():
     plt.ylabel("CDC Frequent Mental Distress Rate")
     plt.legend(title="prolific_mobile_rate", bbox_to_anchor=(1.05, 1), loc="upper left")
     plt.tight_layout()
-    plt.savefig("output/plot4_income_mobile.png")
+    plt.savefig(OUTPUT_DIR / "plot4_income_mobile.png")
     plt.close()
 
     # --- Plot 5: Platform Heritage vs Device Usage in Predicting Depression ---
@@ -175,13 +182,14 @@ def main():
     plt.legend(loc="lower right")
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig("output/plot5_heritage_vs_device.png")
+    plt.savefig(OUTPUT_DIR / "plot5_heritage_vs_device.png")
     plt.close()
 
     # --- Plot 6: Individual PHQ-9 by Device Type & CDC Mental Distress vs Mobile Usage Rate ---
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
 
     sns.boxplot(data=df_individual, x="is_mobile", y="phq9_score", ax=ax1)
+    ax1.set_xticks([0, 1])
     ax1.set_xticklabels(["Desktop", "Mobile"])
     ax1.set_title("Individual PHQ-9 by Device Type")
     ax1.set_xlabel("is_mobile")
@@ -193,12 +201,11 @@ def main():
     ax2.set_ylabel("CDC Frequent Mental Distress Rate")
 
     plt.tight_layout()
-    plt.savefig("output/plot6_individual_and_reg.png")
+    plt.savefig(OUTPUT_DIR / "plot6_individual_and_reg.png")
     plt.close()
 
     print("Visualizations generated in output/ directory.")
 
-    print("Visualizations generated in output/ directory.")
 
 if __name__ == "__main__":
     main()

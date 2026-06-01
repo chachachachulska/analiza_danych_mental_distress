@@ -1,6 +1,11 @@
+from pathlib import Path
+
 import duckdb
 
-con = duckdb.connect("data/db.duckdb")
+ROOT_DIR = Path(__file__).resolve().parents[1]
+DATA_DIR = ROOT_DIR / "data"
+
+con = duckdb.connect(str(DATA_DIR / "db.duckdb"))
 
 # Mapping for PHQ-9 and GAD-7
 val_map = {
